@@ -33,11 +33,13 @@ export default class App extends Component {
             }
           />
         </TouchableOpacity>
+        {/*
         <BulbView
           style={styles.bottom}
           isOn={this.state.bulbOn}
           onStatusChange={this._onStatusChange}
         />
+        */}
       </View>
     );
   }
@@ -47,7 +49,7 @@ export default class App extends Component {
   };
 
   turnOn = () => {
-    /*if (this.state.bulbOn) {
+    if (this.state.bulbOn) {
       this.setState({bulbOn: false});
       NativeModules.Bulb.turnOff();
       NativeModules.Bulb.toast();
@@ -55,7 +57,7 @@ export default class App extends Component {
       this.setState({bulbOn: true});
       NativeModules.Bulb.turnOn();
       NativeModules.Bulb.toast();
-    }*/
+    }
   };
 }
 
