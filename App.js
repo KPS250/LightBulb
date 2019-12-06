@@ -10,7 +10,7 @@ import {
   requireNativeComponent,
 } from 'react-native';
 
-const BulbView = requireNativeComponent('BulbView');
+//const BulbView = requireNativeComponent('BulbView');
 
 export default class App extends Component {
   constructor(props) {
@@ -33,13 +33,11 @@ export default class App extends Component {
             }
           />
         </TouchableOpacity>
-        {/*
-        <BulbView
+        {/*<BulbView
           style={styles.bottom}
           isOn={this.state.bulbOn}
           onStatusChange={this._onStatusChange}
-        />
-        */}
+        />*/}
       </View>
     );
   }
@@ -58,12 +56,18 @@ export default class App extends Component {
       NativeModules.Bulb.turnOn();
       NativeModules.Bulb.toast();
     }
+    NativeModules.Bulb.getLocation(this.location);
+  };
+
+  location =(x, loc) => {
+    // eslint-disable-next-line no-alert
+    console.log(loc);
   };
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex:1,
+    //flex:1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'yellow',

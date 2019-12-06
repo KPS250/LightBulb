@@ -1,11 +1,13 @@
 import Foundation
 import UIKit
+import CoreLocation
 
 @objc(Bulb)
 
-class Bulb: NSObject {
+class Bulb: NSObject, CLLocationManagerDelegate {
   @objc
   static var isOn = false
+  static var location = ""
  
   @objc
   func turnOn() {
@@ -21,13 +23,21 @@ class Bulb: NSObject {
 
   @objc
   func toast() {
+   
+    self.fillLocation()
+    
     //UIApplication.topViewController()!.makeToast("Acount created Successfully", duration: 0.5, position: "bottom")
-    self.showToast(controller: UIApplication.topViewController()! , message: "String", seconds: 2)
+  //  self.showToast(controller: UIApplication.topViewController()! , message: "String", seconds: 2)
   }
   
   @objc
   func getStatus(_ callback: RCTResponseSenderBlock) {
     callback([NSNull(), Bulb.isOn])
+  }
+
+   @objc
+  func getLocation(_ callback: RCTResponseSenderBlock) {
+    callback([NSNull(), Bulb.location])
   }
   
   @objc
@@ -46,11 +56,31 @@ class Bulb: NSObject {
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds) {
       alert.dismiss(animated: true)
     }
-    
     print("Toast is coming!!!")
   }
-  
-  
+
+  func fillLocation(){
+     OperationQueue.main.addOperation{
+      let locationManager = CLLocationManager()
+      locationManager.requestAlwaysAuthorization()
+      locationManager.requestWhenInUseAuthorization()
+      if CLLocationManager.locationServicesEnabled() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+       // OperationQueue.main.addOperation{
+           locationManager.startUpdatingLocation()
+       // }
+       
+      }
+    }
+  }
+
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        Bulb.location = "locations = \(locValue.latitude) \(locValue.longitude)"
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
 }
 
 public extension UIApplication {

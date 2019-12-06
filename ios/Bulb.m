@@ -5,4 +5,5 @@ RCT_EXTERN_METHOD(turnOn)
 RCT_EXTERN_METHOD(turnOff)
 RCT_EXTERN_METHOD(toast)
 RCT_EXTERN_METHOD(getStatus: (RCTResponseSenderBlock)callback)
+RCT_EXTERN_METHOD(getLocation: (RCTResponseSenderBlock)callback)
 @end

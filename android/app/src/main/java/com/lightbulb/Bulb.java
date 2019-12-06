@@ -1,5 +1,6 @@
 package com.lightbulb;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.react.bridge.NativeModule;
@@ -10,7 +11,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 
 public class Bulb extends ReactContextBaseJavaModule  {
-    private static Boolean isOn = false;
+    private Boolean isOn = false;
+    private String location = "";
 
     public Bulb(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -19,6 +21,11 @@ public class Bulb extends ReactContextBaseJavaModule  {
     @ReactMethod
     public void getStatus(Callback successCallback) {
         successCallback.invoke(null, isOn);
+    }
+
+    @ReactMethod
+    public void getLocation(Callback successCallback) {
+        successCallback.invoke(null, location);
     }
 
     @ReactMethod
@@ -35,8 +42,18 @@ public class Bulb extends ReactContextBaseJavaModule  {
 
     @ReactMethod
     public void toast() {
+        filllocation();
         Toast.makeText(this.getReactApplicationContext(), "Toast Aya", Toast.LENGTH_SHORT).show();
         System.out.println("Bulb is turn ON");
+    }
+
+    @ReactMethod
+    public void filllocation() {
+        GpsTracker gpsTracker = new GpsTracker(this.getReactApplicationContext());
+        double latitude = gpsTracker.getLatitude();
+        double longitude = gpsTracker.getLongitude();
+        Log.d("LOC", latitude+"-"+longitude);
+        location = latitude+"-"+longitude;
     }
 
     @Override

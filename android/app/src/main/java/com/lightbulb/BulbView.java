@@ -24,6 +24,9 @@ public class BulbView extends Button {
     public BulbView(Context context) {
         super(context);
         this.setTextColor(Color.BLUE);
+        this.setHeight(500);
+        this.setWidth(500);
+        this.setBackgroundColor(Color.DKGRAY);
         this.setOnClickListener(changeStatusListener);
         updateButton();
     }
