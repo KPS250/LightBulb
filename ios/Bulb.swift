@@ -8,6 +8,7 @@ class Bulb: NSObject, CLLocationManagerDelegate {
   @objc
   static var isOn = false
   static var location = ""
+  static var locationManager = CLLocationManager()
  
   @objc
   func turnOn() {
@@ -61,14 +62,14 @@ class Bulb: NSObject, CLLocationManagerDelegate {
 
   func fillLocation(){
      OperationQueue.main.addOperation{
-      let locationManager = CLLocationManager()
-      locationManager.requestAlwaysAuthorization()
-      locationManager.requestWhenInUseAuthorization()
+      
+      Bulb.locationManager.requestAlwaysAuthorization()
+      Bulb.locationManager.requestWhenInUseAuthorization()
       if CLLocationManager.locationServicesEnabled() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        Bulb.locationManager.delegate = self
+        Bulb.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
        // OperationQueue.main.addOperation{
-           locationManager.startUpdatingLocation()
+           Bulb.locationManager.startUpdatingLocation()
        // }
        
       }

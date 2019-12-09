@@ -61,7 +61,7 @@ export default class App extends Component {
 
   location =(x, loc) => {
     // eslint-disable-next-line no-alert
-    console.log(loc);
+    alert(loc);
   };
 }
 
